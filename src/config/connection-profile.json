@@ -1,0 +1,49 @@
+{
+  "name": "kyc-network",
+  "version": "1.0.0",
+  "client": {
+    "organization": "BankAMSP",
+    "connection": {
+      "timeout": { "peer": { "endorser": "300" }, "orderer": "300" }
+    }
+  },
+  "organizations": {
+    "BankAMSP": { "mspid": "BankAMSP", "peers": ["peer0.banka.com"] },
+    "BankBMSP": { "mspid": "BankBMSP", "peers": ["peer0.bankb.com"] },
+    "RegulatorMSP": { "mspid": "RegulatorMSP", "peers": ["peer0.regulator.com"] }
+  },
+  "peers": {
+    "peer0.banka.com": {
+      "url": "grpcs://peer0.banka.com:7051",
+      "tlsCACerts": { "path": "/home/sachin/fabric-samples/decentralized-kyc/fabric-network/organizations/cryptogen/peerOrganizations/banka.com/peers/peer0.banka.com/tls/ca.crt" },
+      "grpcOptions": { "ssl-target-name-override": "peer0.banka.com" }
+    },
+    "peer0.bankb.com": {
+      "url": "grpcs://peer0.bankb.com:8051",
+      "tlsCACerts": { "path": "/home/sachin/fabric-samples/decentralized-kyc/fabric-network/organizations/cryptogen/peerOrganizations/bankb.com/peers/peer0.bankb.com/tls/ca.crt" },
+      "grpcOptions": { "ssl-target-name-override": "peer0.bankb.com" }
+    },
+    "peer0.regulator.com": {
+      "url": "grpcs://peer0.regulator.com:9051",
+      "tlsCACerts": { "path": "/home/sachin/fabric-samples/decentralized-kyc/fabric-network/organizations/cryptogen/peerOrganizations/regulator.com/peers/peer0.regulator.com/tls/ca.crt" },
+      "grpcOptions": { "ssl-target-name-override": "peer0.regulator.com" }
+    }
+  },
+  "orderers": {
+    "orderer.example.com": {
+      "url": "grpcs://orderer.example.com:7050",
+      "tlsCACerts": { "path": "/home/sachin/fabric-samples/decentralized-kyc/fabric-network/organizations/cryptogen/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt" },
+      "grpcOptions": { "ssl-target-name-override": "orderer.example.com" }
+    }
+  },
+  "channels": {
+    "kycchannel": {
+      "orderers": ["orderer.example.com"],
+      "peers": {
+        "peer0.banka.com": { "endorsingPeer": true, "chaincodeQuery": true, "ledgerQuery": true, "eventSource": true },
+        "peer0.bankb.com": { "endorsingPeer": true, "chaincodeQuery": false, "ledgerQuery": false, "eventSource": false },
+        "peer0.regulator.com": { "endorsingPeer": true, "chaincodeQuery": false, "ledgerQuery": false, "eventSource": false }
+      }
+    }
+  }
+}
